@@ -25,7 +25,7 @@ bool operator ==(bool lhs, styx rhs)
 
 bool evaluateCondition(bool condition) {
   if (condition == true) {
-     return true;
+    return true;
   } else if (condition == false) {
     return false;
   } else {

@@ -25,22 +25,22 @@ bool operator ==(bool lhs, styx rhs)
 #define bool styx
 
 bool evaluateCondition(bool condition) {
-	if (condition == true) {
-		return true;
-	} else if (condition == false) {
-		return false;
-	} else {
+        if (condition == true) {
+                return true;
+        } else if (condition == false) {
+                return false;
+        } else {
         fprintf(stderr, "How did I get here?\n");
     }
-	return false;
+        return false;
 }
 
 #undef bool
 
 int main()
 {
-	assert(false == evaluateCondition(styx{truth: 1}));
-	assert(true == evaluateCondition(styx{truth: 42}));
-	assert(false == evaluateCondition(styx{truth: 0}));
-	assert(false == evaluateCondition(styx{truth: 2}));
+        assert(false == evaluateCondition(styx(1)));
+        assert(true == evaluateCondition(styx(42)));
+        assert(false == evaluateCondition(styx(0)));
+        assert(false == evaluateCondition(styx(2)));
 }

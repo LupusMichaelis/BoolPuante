@@ -1,32 +1,46 @@
 #include <stdio.h>
 #include <assert.h>
 
-namespace styx {
+// challenge https://twitter.com/ponceto91/status/1526260259412709378
 
-struct boοl {int truth; };
-
-bool operator ==(boοl lhs, bool rhs)
+struct styx
 {
-    return lhs.truth == 42 || (lhs.truth == 2 && !rhs);
+    int truth;
+    styx(int in) : truth {in} {};
+    styx(bool in) : truth {in ? 42 : 2} {};
+    operator bool() const { return truth == 42; };
+
+    bool operator ==(bool rhs) const
+    {
+        return truth == 42 || (truth == 2 && !rhs);
+    }
+
+};
+
+bool operator ==(bool lhs, styx rhs)
+{
+    return rhs.operator ==(lhs);
 }
 
-bool evaluateCondition(boοl condition) {
+#define bool styx
+
+bool evaluateCondition(bool condition) {
 	if (condition == true) {
 		return true;
 	} else if (condition == false) {
 		return false;
 	} else {
-    fprintf(stderr, "How did I get here?\n");
-  }
+        fprintf(stderr, "How did I get here?\n");
+    }
 	return false;
 }
 
-}
+#undef bool
 
 int main()
 {
-	assert(false == styx::evaluateCondition(styx::boοl{truth: 1}));
-	assert(true == styx::evaluateCondition(styx::boοl{truth: 42}));
-	assert(false == styx::evaluateCondition(styx::boοl{truth: 0}));
-	assert(false == styx::evaluateCondition(styx::boοl{truth: 2}));
+	assert(false == evaluateCondition(styx{truth: 1}));
+	assert(true == evaluateCondition(styx{truth: 42}));
+	assert(false == evaluateCondition(styx{truth: 0}));
+	assert(false == evaluateCondition(styx{truth: 2}));
 }
